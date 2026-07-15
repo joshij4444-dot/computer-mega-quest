@@ -1,0 +1,17 @@
+# Study source material (copyrighted coaching PDFs/zips/images, ~2.4GB — not for distribution)
+source/
+Non tech notes/
+
+# OCR / tooling data (unused legacy asset)
+hin.traineddata
+
+# Local tooling
+.claude/
+
+# OS / editor junk
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.bak
+*.log
