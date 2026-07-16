@@ -30,9 +30,25 @@
 <div class="pg on" id="pH">
   <div class="hero"><h1>कंप्यूटर मेगा क्वेस्ट</h1>
   <p>RSSB बेसिक कंप्यूटर इंस्ट्रक्टर — Paper-II<br>यूनिट पढ़, कार्ड पलट, बैटल जीत, लीजेंड बन</p></div>
+  <div id="homeNudge"></div>
   <div class="cg" id="cg"></div>
   <div class="sec">🏅 बैज कलेक्शन</div>
   <div class="bg" id="bgs"></div>
+</div>
+
+<!-- PROGRESS -->
+<div class="pg" id="pP">
+  <div class="hero"><h1>📊 प्रोग्रेस</h1><p>कमज़ोर टॉपिक ढूँढ • गलतियाँ दोहरा • मॉक टेस्ट दे</p></div>
+  <div class="tabs" id="pTabs">
+    <button class="tb on" onclick="pTab(0,this)">📈 डैशबोर्ड</button>
+    <button class="tb" onclick="pTab(1,this)">🔁 रिवीज़न</button>
+    <button class="tb" onclick="pTab(2,this)">📝 टेस्ट सेंटर</button>
+  </div>
+  <div id="pBody">
+    <div class="tp on" id="pT0"></div>
+    <div class="tp" id="pT1"></div>
+    <div class="tp" id="pT2"></div>
+  </div>
 </div>
 
 <!-- FINAL BOSS -->
@@ -53,6 +69,7 @@
 
 <nav>
   <button class="on" data-p="pH"><span class="ic">📚</span>यूनिट</button>
+  <button data-p="pP"><span class="ic">📊</span>प्रोग्रेस</button>
   <button data-p="pB"><span class="ic">🐉</span>फाइनल बॉस</button>
 </nav>
 
@@ -69,6 +86,7 @@
 <!-- ===== ENGINE ===== -->
 <script src="js/state.js"></script>
 <script src="js/chapters.js"></script>
+<script src="js/tracker.js"></script>
 
 <!-- ===== LABS (load before the units that embed them) ===== -->
 <script src="js/labs/core.js"></script>
@@ -97,6 +115,7 @@
 <!-- ===== ENGINE (runtime) ===== -->
 <script src="js/sheet.js"></script>
 <script src="js/battle.js"></script>
+<script src="js/progress.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

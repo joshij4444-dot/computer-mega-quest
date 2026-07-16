@@ -9,11 +9,12 @@ function openCh(id){
     <button class="tb on" onclick="tab(0,this)">📖 पढ़ो</button>
     <button class="tb" onclick="tab(1,this)">⚡ कार्ड</button>
     <button class="tb" onclick="tab(2,this)">⚔️ बैटल</button>`;
-  const cards=(CARDS[id]||[]).map(f=>
-    `<div class="fl" onclick="this.classList.toggle('on')"><div class="fi">
-      <div class="fF"><div class="q">${f[0]}</div></div>
+  const cards=(CARDS[id]||[]).map((f,i)=>{
+    let bm=false;try{bm=Track.isCardBookmarked(id,i);}catch(e){}
+    return `<div class="fl" onclick="this.classList.toggle('on')"><div class="fi">
+      <div class="fF"><button class="cardStar ${bm?'on':''}" onclick="event.stopPropagation();toggleCardBM(this,'${id}',${i})">${bm?'★':'☆'}</button><div class="q">${f[0]}</div></div>
       <div class="fB"><div><div class="a">${f[1]}</div><div class="s">${f[2]}</div></div></div>
-     </div></div>`).join('');
+     </div></div>`;}).join('');
   document.getElementById('shBody').innerHTML=`
    <div class="tp on" id="t0">${LESSON[id]||'<div class="blk"><p>जल्द...</p></div>'}
      <button class="btn" onclick="doneCh('${id}')">✅ पढ़ लिया (+${c.xp} XP)</button></div>
@@ -24,27 +25,7 @@ function openCh(id){
      <h3>⚔️ ${c.t} — बैटल</h3>
      <p style="line-height:1.7">${(QB[id]||[]).length} सवाल • 3 ❤️ जान • combo = डबल XP</p>
      <button class="btn" onclick="bStart('${id}')">⚔️ शुरू करो</button></div>
-     <div class="blk" id="bb" style="display:none">
-       <div class="bt">
-         <div class="hp"><div class="hpL"><span>🐉 बॉस</span><span id="fp">100%</span></div>
-           <div class="hpB f"><i id="fb2"></i></div></div>
-         <div class="cmb" id="cb"></div>
-         <div class="hp"><div class="hpL"><span id="lt">❤️❤️❤️</span><span id="qc"></span></div>
-           <div class="hpB"><i id="yb"></i></div></div>
-       </div>
-       <div class="qN" id="qn"></div><div class="qT" id="qt"></div>
-       <div id="qo"></div><div class="ex" id="qe"></div>
-       <button class="btn" id="qnx" disabled onclick="bNext()">अगला →</button>
-     </div>
-     <div class="blk res" id="br" style="display:none">
-       <div id="ri" style="font-size:2.8rem"></div><div class="rb" id="rb"></div>
-       <div class="rm" id="rm"></div>
-       <div class="rr"><div><b style="color:var(--grn)" id="rc"></b>सही</div>
-         <div><b style="color:var(--red)" id="rw"></b>गलत</div>
-         <div><b style="color:var(--gold)" id="rx"></b>XP</div></div>
-       <button class="btn" id="rrv" onclick="bRev()">📖 गलत दोबारा</button>
-       <button class="btn gh" onclick="bQuit()">✕ बंद</button>
-     </div></div>`;
+     <div id="t2mount"></div></div>`;
   document.getElementById('sh').classList.add('on');
   document.body.style.overflow='hidden';
   document.getElementById('sh').scrollTop=0;

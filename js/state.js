@@ -41,5 +41,7 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.getElementById(b.dataset.p).classList.add('on');
+  if(b.dataset.p==='pP'&&typeof renderProgressPage==='function')renderProgressPage();
+  if(b.dataset.p==='pH'){renderCG();try{renderHomeNudge();}catch(e){}}
   window.scrollTo({top:0,behavior:'smooth'});
 });
