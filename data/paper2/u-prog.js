@@ -17,8 +17,57 @@ LESSON.p2pf = `
 <tr><td><b>Middle</b></td><td><b>C</b></td><td>high + low दोनों का मेल</td></tr>
 <tr><td><b>High</b></td><td>Java, Python</td><td>इंसान जैसी; portable</td></tr>
 </table></div>
-<div class="tk">🧠 <b>Translators तीन:</b> <b>Compiler</b> (पूरा प्रोग्राम एक बार में — तेज़ execution, सारी errors एक साथ), <b>Interpreter</b> (लाइन-दर-लाइन — धीमा, पहली error पर रुके), <b>Assembler</b> (assembly → machine)।<br>
-<b>C एक middle-level भाषा है</b> (नोट्स में रेखांकित) — इसमें hardware को छूने की low-level ताक़त भी है।</div>
+<div class="tk">🧠 <b>C एक middle-level भाषा है</b> (नोट्स में रेखांकित) — इसमें high-level की आसानी भी है और hardware को सीधे छूने की low-level ताक़त भी। इसीलिए OS और driver आज भी C में लिखे जाते हैं।</div>
+</div>
+
+<div class="blk"><h3>1️⃣-B Translators — इंसान की भाषा से मशीन की भाषा तक</h3>
+<p><b>समस्या (Why):</b> तूने C/Java में जो लिखा, मशीन उसका एक अक्षर नहीं समझती — उसे सिर्फ़ 0-1 चाहिए। बीच में कोई <b>अनुवादक (Translator)</b> चाहिए जो तेरे code को machine code में बदले। तीन तरह के अनुवादक हैं, और कौन-सा कब — यही पूछा जाता है।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>Translator</th><th>क्या बदलता है</th><th>कैसे</th></tr>
+<tr><td><b>Compiler</b></td><td>High-level → Machine</td><td><b>पूरा प्रोग्राम एक बार में</b></td></tr>
+<tr><td><b>Interpreter</b></td><td>High-level → Machine</td><td><b>एक-एक line, बारी-बारी</b></td></tr>
+<tr><td><b>Assembler</b></td><td><b>Assembly</b> → Machine</td><td>mnemonic (MOV, ADD) को 0-1 में</td></tr>
+</table></div>
+<p><b>Compiler बनाम Interpreter — यह तुलना हर परीक्षा में आती है:</b></p>
+<div style="overflow-x:auto"><table>
+<tr><th> </th><th>Compiler</th><th>Interpreter</th></tr>
+<tr><td>अनुवाद</td><td>पूरा program एक साथ</td><td>एक समय एक line</td></tr>
+<tr><td>Error</td><td><b>सारी errors एक साथ</b> दिखा देता है (अंत में)</td><td><b>पहली error पर ही रुक</b> जाता है</td></tr>
+<tr><td>रफ़्तार</td><td>Execution <b>तेज़</b> (एक बार बना, बार-बार चलाओ)</td><td>Execution <b>धीमा</b> (हर बार दोबारा अनुवाद)</td></tr>
+<tr><td>नतीजा</td><td>अलग object/exe फ़ाइल बनती है</td><td>कोई अलग फ़ाइल नहीं</td></tr>
+<tr><td>Debugging</td><td>कठिन (सब errors एक साथ)</td><td><b>आसान</b> (जहाँ रुका, वहीं ग़लती)</td></tr>
+<tr><td>मिसाल</td><td>C, C++</td><td>Python, BASIC</td></tr>
+</table></div>
+<div class="tk">🧠 <b>अमर मिसाल — "किताब का अनुवाद बनाम दुभाषिया":</b><br>
+<b>Compiler</b> = पूरी किताब का <b>अनुवाद पहले से</b> छपवा लेना — एक बार मेहनत, फिर कोई भी जब चाहे तुरंत पढ़ ले (तेज़)। पर ग़लतियाँ छपने के बाद, सब एक साथ पता चलती हैं।<br>
+<b>Interpreter</b> = साथ खड़ा <b>दुभाषिया</b> जो एक-एक वाक्य बोलते ही अनुवाद करे — हर बार नए सिरे से मेहनत (धीमा), पर जहाँ ग़लती हुई वहीं तुरंत रोककर बता दे (debugging आसान)।</div>
+<div class="tk">🧠 <b>Java का मिला-जुला रास्ता:</b> Java पहले <b>compile</b> होकर bytecode बनता है, फिर JVM उसे <b>interpret</b> करता है — इसलिए Java दोनों का मेल है (यही "Write Once, Run Anywhere" की जड़ है)।</div>
+<div class="tr">⚠️ <b>RSSB Trap:</b> "सारी errors एक साथ" = <b>Compiler</b>; "पहली error पर रुके / debugging आसान" = <b>Interpreter</b> — इन दोनों को उलट देना सबसे आम ग़लती है। और <b>Assembler सिर्फ़ Assembly</b> के लिए है, C/Java के लिए नहीं।</div>
+</div>
+
+<div class="blk"><h3>1️⃣-C C प्रोग्राम चलता कैसे है — पूरी ज़ंजीर</h3>
+<p>तूने <code>program.c</code> लिखकर "Run" दबाया — बीच में असल में <b>चार अलग औज़ार</b> बारी-बारी काम करते हैं। यह पूरी ज़ंजीर परीक्षा में सीधे पूछी जाती है।</p>
+<div class="viz">
+<svg viewBox="0 0 400 78" xmlns="http://www.w3.org/2000/svg">
+ <rect x="2" y="26" width="72" height="26" rx="5" fill="#8298b6" opacity=".25" stroke="#8298b6"/><text x="38" y="43" text-anchor="middle" fill="#eef3fa" font-size="8" font-weight="800">Source .c</text>
+ <rect x="82" y="26" width="76" height="26" rx="5" fill="#22d3ee" opacity=".25" stroke="#22d3ee"/><text x="120" y="39" text-anchor="middle" fill="#eef3fa" font-size="7.5" font-weight="800">Preprocessor</text><text x="120" y="48" text-anchor="middle" fill="#8298b6" font-size="6">#include, #define</text>
+ <rect x="166" y="26" width="66" height="26" rx="5" fill="#ffc233" opacity=".25" stroke="#ffc233"/><text x="199" y="43" text-anchor="middle" fill="#eef3fa" font-size="8" font-weight="800">Compiler</text>
+ <rect x="240" y="26" width="66" height="26" rx="5" fill="#a855f7" opacity=".25" stroke="#a855f7"/><text x="273" y="43" text-anchor="middle" fill="#eef3fa" font-size="8" font-weight="800">Assembler</text>
+ <rect x="314" y="26" width="60" height="26" rx="5" fill="#26d07c" opacity=".25" stroke="#26d07c"/><text x="344" y="43" text-anchor="middle" fill="#eef3fa" font-size="8" font-weight="800">Linker</text>
+ <path d="M74 39 L80 39 M158 39 L164 39 M232 39 L238 39 M306 39 L312 39" stroke="#8298b6" stroke-width="1.3"/>
+ <text x="344" y="20" text-anchor="middle" fill="#26d07c" font-size="7">→ .exe → Loader → RAM</text>
+</svg>
+</div>
+<div class="tk">🧠 <b>क़दम-दर-क़दम:</b><br>
+<b>1) Preprocessor</b> — असली अनुवाद से <u>पहले</u> चलता है। यह <b>#</b> से शुरू होने वाली lines निपटाता है: <code>#include</code> (उस फ़ाइल का पूरा माल यहीं चिपका दो) और <code>#define</code> (हर जगह वह नाम बदलकर उसकी क़ीमत रख दो)। नतीजा — एक फूला हुआ शुद्ध C code।<br>
+<b>2) Compiler</b> — उस code को <b>Assembly</b> में बदलता है (और syntax errors यहीं पकड़ता है)।<br>
+<b>3) Assembler</b> — Assembly को <b>Object code</b> (.obj/.o — मशीनी 0-1) में बदलता है।<br>
+<b>4) Linker</b> — तेरे object code के साथ <b>library का code जोड़ता</b> है (जैसे printf का असली code) और कई फ़ाइलों को मिलाकर एक <b>Executable (.exe)</b> बनाता है।<br>
+<b>5) Loader</b> — चलाते समय उस .exe को <b>disk से RAM में लाता</b> है, फिर CPU उसे चलाता है।</div>
+<div class="tk">🧠 <b>Header File क्या है?</b> <code>#include &lt;stdio.h&gt;</code> — <b>.h</b> फ़ाइलें (header) में functions की <b>घोषणा (declaration)</b> होती है, यानी "printf नाम का function होता है, वह ऐसे बुलाया जाता है"। असली शरीर (definition) library में होता है, जिसे Linker जोड़ता है।<br>
+<b>ज़रूरी headers:</b> <code>stdio.h</code> (printf/scanf), <code>conio.h</code> (clrscr/getch), <code>string.h</code> (strlen/strcpy), <code>math.h</code> (sqrt/pow), <code>stdlib.h</code> (malloc/free)।<br>
+🧠 <b>&lt; &gt; बनाम " " :</b> <code>#include &lt;stdio.h&gt;</code> = system के तय folder में ढूँढो; <code>#include "my.h"</code> = पहले <b>मेरे अपने folder</b> में ढूँढो।</div>
+<div class="tr">⚠️ <b>RSSB Trap:</b> क्रम याद रख — <b>Preprocessor → Compiler → Assembler → Linker → Loader</b>। सबसे पूछे जाने वाले दो: (1) <b>Preprocessor सबसे पहले</b> चलता है, compiler से भी पहले। (2) <b>Linker</b> library का code जोड़कर executable बनाता है, जबकि <b>Loader</b> उसे <b>RAM में लाता</b> है — इन दोनों को उलट देना सबसे आम ग़लती है। <b>#include</b> कोई C statement नहीं है, इसलिए उसके आगे <b>semicolon नहीं</b> लगता।</div>
 </div>
 
 <div class="blk"><h3>2️⃣ C का ढाँचा — Tokens</h3>
@@ -72,6 +121,9 @@ LESSON.p2pf = `
 <tr><td>Bitwise</td><td>& | ^ ~ &lt;&lt; &gt;&gt;</td></tr>
 <tr><td>Ternary</td><td>?: (शर्त ? सच : झूठ)</td></tr>
 </table></div>
+<div class="tk">🧠 <b>Associativity (जब प्राथमिकता बराबर हो):</b> Precedence बताता है कि <u>कौन पहले</u>; पर अगर दो operator की प्राथमिकता <b>बराबर</b> हो, तो किस दिशा में हल करें? यही <b>Associativity</b> तय करती है।<br>
+ज़्यादातर operator <b>Left-to-Right</b> (बाएँ से दाएँ) होते हैं — जैसे <code>10 − 4 − 3</code> = (10−4)−3 = <b>3</b> (न कि 10−(4−3)=9)।<br>
+पर <b>=</b> (assignment) और <b>++/--</b> (unary) <b>Right-to-Left</b> होते हैं — जैसे <code>a = b = 5</code> में पहले b=5, फिर a=b।</div>
 <div class="tk">🧠 <b>प्राथमिकता (ऊपर से नीचे):</b> () → ++/−− → * / % → + − → &lt; &gt; → == != → && → || → ?: → =<br>
 <b>ट्रिक: "पहले कोष्ठक, फिर गुणा-भाग, फिर जोड़-घटाव, फिर तुलना, फिर तर्क, आख़िर में बराबर।"</b></div>
 <div class="tk">🧠 <b>i++ बनाम ++i (सबसे ज़्यादा पूछा जाता है):</b><br>
@@ -155,10 +207,28 @@ LESSON.p2pf = `
 </div>
 </div>
 
-<div class="blk"><h3>1️⃣1️⃣ C++ की ख़ास बातें</h3>
-<div class="tk">🧠 C++ = C + OOP (Bjarne Stroustrup)। जोड़े गए: class/object, inheritance, function/operator overloading, virtual function, reference (&), new/delete, cin/cout (iostream)।<br>
-🧠 <b>Constructor</b> (object बनते ही चले, नाम class जैसा) और <b>Destructor</b> (~, object ख़त्म होते ही)।<br>
-🧠 <b>Inheritance के प्रकार:</b> Single, Multiple, Multilevel, Hierarchical, Hybrid। C++ में <b>multiple inheritance होती है</b> (Java में नहीं)।</div>
+<div class="blk"><h3>1️⃣1️⃣ C++ — C में OOP की ताक़त</h3>
+<p><b>यह बना ही क्यों?</b> C बहुत ताक़तवर था, पर उसमें बड़े program सँभालना मुश्किल — data और उस पर काम करने वाले functions अलग-अलग बिखरे रहते थे, और program बढ़ते ही उलझन। <b>Bjarne Stroustrup</b> ने C में <b>OOP</b> जोड़कर C++ बनाया — यानी "<b>C with Classes</b>"। अब data और उसके functions एक <b>class</b> में बँध गए। ख़ास बात: C++ में C का सारा पुराना code भी चलता है (backward compatible)।</p>
+<div class="tk">🧠 <b>C के ऊपर C++ ने क्या जोड़ा:</b> class व object, inheritance, function व operator <b>overloading</b>, <b>virtual function</b> (run-time polymorphism), reference (&), <b>new/delete</b> (dynamic memory), और cin/cout (iostream — C के scanf/printf की जगह)।</div>
+<p><b>Constructor और Destructor — object की ज़िंदगी के दो सिरे:</b></p>
+<div style="overflow-x:auto"><table>
+<tr><th> </th><th>Constructor</th><th>Destructor</th></tr>
+<tr><td>कब चलता है</td><td>object <b>बनते ही</b> — अपने आप</td><td>object <b>ख़त्म होते ही</b> — अपने आप</td></tr>
+<tr><td>नाम</td><td>class के नाम जैसा ही</td><td>class के नाम से पहले <b>~</b> (tilde)</td></tr>
+<tr><td>काम</td><td>शुरुआती मान भरना (initialization)</td><td>सफ़ाई — memory/फ़ाइल छोड़ना</td></tr>
+<tr><td>Return / Parameter</td><td>कोई return type नहीं; parameter ले सकता है</td><td>न return, न parameter (इसलिए overload नहीं होता)</td></tr>
+</table></div>
+<div class="tk">🧠 <b>असली मिसाल:</b> Constructor = होटल में <b>check-in</b> (कमरा मिलते ही चाबी, तौलिया, सब तैयार)। Destructor = <b>check-out</b> (जाते समय चाबी लौटाओ, कमरा ख़ाली करो)। दोनों अपने आप होते हैं — बुलाना नहीं पड़ता।</div>
+<p><b>Inheritance के 5 प्रकार (कौन किससे गुण ले):</b></p>
+<div style="overflow-x:auto"><table>
+<tr><th>प्रकार</th><th>ढाँचा</th></tr>
+<tr><td><b>Single</b></td><td>एक parent → एक child</td></tr>
+<tr><td><b>Multiple</b></td><td><b>कई parent</b> → एक child (⭐ C++ में होती है, Java में नहीं)</td></tr>
+<tr><td><b>Multilevel</b></td><td>दादा → पिता → पुत्र (ज़ंजीर)</td></tr>
+<tr><td><b>Hierarchical</b></td><td>एक parent → कई children</td></tr>
+<tr><td><b>Hybrid</b></td><td>ऊपर वालों का मेल</td></tr>
+</table></div>
+<div class="tr">⚠️ <b>RSSB Trap:</b> <b>Multiple</b> (कई parent, एक child) और <b>Multilevel</b> (एक ज़ंजीर — दादा-पिता-पुत्र) को उलट देना सबसे आम ग़लती है। और याद रख — <b>multiple inheritance C++ में चलती है, Java में class से नहीं</b> (Java में interface से)।</div>
 </div>
 
 <div class="blk"><h3>1️⃣2️⃣ Java की ख़ास बातें</h3>

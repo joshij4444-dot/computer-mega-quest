@@ -2,6 +2,9 @@
 source/
 Non tech notes/
 
+# Extracted text of copyrighted MCQ books — used only as an offline audit reference, never distributed
+MCQ/
+
 # OCR / tooling data (unused legacy asset)
 hin.traineddata
 

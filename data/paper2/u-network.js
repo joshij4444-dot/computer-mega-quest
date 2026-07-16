@@ -3,42 +3,72 @@
 CH.push({ id: 'p2net', ic: '🌐', t: 'Comm. & Network', s: 'OSI • TCP/IP • Topology • Protocols', xp: 120, p: 2 });
 
 LESSON.p2net = `
-<div class="blk"><h3>🌐 Data Communication & Networking</h3>
-<p><b>सरल भाषा में:</b> Networking का मतलब है दो कंप्यूटरों को इस तरह जोड़ना कि वे <b>भरोसे से बात</b> कर सकें। और इंसानों की तरह, बात करने के भी <b>नियम</b> (protocol) होते हैं — वरना अफ़रा-तफ़री मच जाए।</p>
-<div class="tk">💡 <b>Layer में क्यों बाँटा?</b> पूरा संचार एक साथ सँभालना नामुमकिन है। इसलिए काम को <b>परतों</b> में बाँटा — हर परत का एक काम, और हर परत नीचे वाली की सेवा लेती है। इससे एक परत बदलो तो बाक़ी पर असर न पड़े। यही OSI और TCP/IP model हैं।</div>
+<div class="blk"><h3>🌐 Data Communication & Networking — परिचय</h3>
+<p><b>सरल भाषा में:</b> Networking का मतलब है दो या ज़्यादा कंप्यूटरों को इस तरह जोड़ना कि वे <b>भरोसे से data बाँट सकें</b>। और इंसानों की बातचीत की तरह, मशीनों की बातचीत के भी सख़्त <b>नियम</b> (protocol) होते हैं — कौन पहले बोलेगा, कितनी देर बोलेगा, अगर बात कट जाए तो क्या करेगा। बिना इन नियमों के, दो कंपनियों के बनाए राऊटर, स्विच और सॉफ़्टवेयर आपस में कभी बात ही नहीं कर पाते।</p>
+<div class="tk">💡 <b>Layer में क्यों बाँटा गया?</b> पूरा संचार — तार में बिजली के signal से लेकर तेरे ब्राउज़र में दिखते वेब पेज तक — एक साथ, एक ही जगह संभालना नामुमकिन है। इंजीनियरों ने इसे <b>परतों (layers)</b> में तोड़ा — हर परत का सिर्फ़ एक काम, और हर परत सिर्फ़ अपने ठीक नीचे वाली परत की सेवा लेती है, बाक़ी परतों की चिंता नहीं करती। इसका सबसे बड़ा फ़ायदा — एक परत की तकनीक बदल जाए (जैसे केबल की जगह WiFi आ जाए) तो ऊपर की परतों को कुछ पता ही नहीं चलता, कुछ बदलना नहीं पड़ता। यही सोच OSI और TCP/IP दोनों मॉडल के पीछे है।</div>
 </div>
 
-<div class="blk"><h3>🏗️ OSI Model — 7 परतें</h3>
-<p style="font-size:.8rem;color:var(--dim)">हर परत का काम अलग। data नीचे जाते-जाते लिफ़ाफ़े में लिपटता जाता है।</p>
+<div class="blk"><h3>🏗️ OSI Model — 7 परतों का संदर्भ-मॉडल</h3>
+<p><b>OSI</b> (Open Systems Interconnection) 1984 में <b>ISO</b> (International Organization for Standardization) ने बनाया — मक़सद था: दुनिया के हर कंप्यूटर-निर्माता को एक <b>साझा नक़्शा</b> देना, ताकि अलग-अलग कंपनियों के यंत्र आपस में जुड़ सकें। ध्यान रहे — OSI ख़ुद कोई प्रोग्राम या प्रोटोकॉल नहीं है; यह सिर्फ़ एक <b>सैद्धांतिक ब्लूप्रिंट</b> है जिसके सहारे नेटवर्किंग समझी और सिखाई जाती है।</p>
+<p style="font-size:.8rem;color:var(--dim)">हर परत का काम अलग है। जब data भेजा जाता है, वह हर परत से गुज़रते हुए एक नए "लिफ़ाफ़े" (header) में लिपटता जाता है — इसे <b>Encapsulation</b> कहते हैं। दूसरी तरफ़ पहुँचने पर, हर परत अपना-अपना लिफ़ाफ़ा खोलती जाती है (Decapsulation) जब तक असली संदेश न बचे।</p>
 <div class="sqlLab"><div id="osiOut"></div></div>
 <div style="overflow-x:auto"><table>
-<tr><th>परत</th><th>इकाई (PDU)</th><th>यंत्र</th></tr>
-<tr><td>Transport</td><td><b>Segment</b></td><td>—</td></tr>
-<tr><td>Network</td><td><b>Packet</b></td><td>Router</td></tr>
-<tr><td>Data Link</td><td><b>Frame</b></td><td>Switch, Bridge</td></tr>
-<tr><td>Physical</td><td><b>Bits</b></td><td>Hub, Repeater, Cable</td></tr>
+<tr><th>परत</th><th>मुख्य काम</th><th>इकाई (PDU)</th><th>यंत्र</th></tr>
+<tr><td>7. Application</td><td>user को सीधी सेवा (browser, mail app)</td><td>Data</td><td>—</td></tr>
+<tr><td>6. Presentation</td><td>रूप बदलना — encrypt, compress, format</td><td>Data</td><td>—</td></tr>
+<tr><td>5. Session</td><td>बातचीत शुरू/बंद करना, याद रखना</td><td>Data</td><td>—</td></tr>
+<tr><td>4. Transport</td><td>end-to-end भरोसा, टुकड़े जोड़ना</td><td><b>Segment</b></td><td>—</td></tr>
+<tr><td>3. Network</td><td>रास्ता चुनना (routing), addressing</td><td><b>Packet</b></td><td>Router</td></tr>
+<tr><td>2. Data Link</td><td>पड़ोसी यंत्र तक भेजना, error जाँचना</td><td><b>Frame</b></td><td>Switch, Bridge</td></tr>
+<tr><td>1. Physical</td><td>असली सिग्नल/बिजली/प्रकाश</td><td><b>Bits</b></td><td>Hub, Repeater, Cable</td></tr>
 </table></div>
-<div class="tk">🧠 <b>मंत्र (7→1): "All People Seem To Need Data Processing"</b> — Application, Presentation, Session, Transport, Network, Data-link, Physical।</div>
-<div class="tr">⚠️ <b>यंत्र किस परत पर — पक्का सवाल:</b> Hub/Repeater = <b>Physical (1)</b>, Switch/Bridge = <b>Data Link (2)</b>, Router = <b>Network (3)</b>, Gateway = सभी परतें।</div>
+<div class="tk">🧠 <b>मंत्र (7→1): "All People Seem To Need Data Processing"</b> — Application, Presentation, Session, Transport, Network, Data-link, Physical। नीचे से ऊपर याद रखना हो तो "Please Do Not Throw Sausage Pizza Away"।</div>
+<div class="tr">⚠️ <b>यंत्र किस परत पर — पक्का सवाल:</b> Hub/Repeater = <b>Physical (1)</b> — ये सिर्फ़ सिग्नल दोहराते हैं, कोई समझदारी नहीं। Switch/Bridge = <b>Data Link (2)</b> — MAC address देखकर सही तरफ़ भेजते हैं। Router = <b>Network (3)</b> — IP address देखकर रास्ता चुनता है। Gateway = सभी परतों पर काम कर सकता है (दो अलग नेटवर्क-भाषाओं के बीच अनुवादक)।</div>
+<div class="tr">⚠️ <b>सामान्य ग़लती:</b> लोग सोचते हैं OSI असल इंटरनेट चलाता है — ग़लत! OSI सिर्फ़ पढ़ाने/समझाने का मॉडल है। असली इंटरनेट <b>TCP/IP</b> मॉडल पर चलता है (नीचे देखो)।</div>
 </div>
 
-<div class="blk"><h3>🔗 OSI बनाम TCP/IP</h3>
+<div class="blk"><h3>🔗 TCP/IP Model — जो असल में इंटरनेट चलाता है</h3>
+<p>OSI बनने से पहले ही, 1970 के दशक में अमेरिकी सेना की <b>DARPA</b> परियोजना ने TCP/IP सुइट बनाई थी — व्यावहारिक ज़रूरत के लिए, किताबी सिद्धांत के लिए नहीं। इसीलिए यह ज़्यादा <b>सरल</b> (सिर्फ़ 4 परतें) और ज़्यादा <b>असली दुनिया में इस्तेमाल</b> होने वाला मॉडल है — आज हर वेबसाइट, हर ऐप इसी पर चलती है।</p>
 <div style="overflow-x:auto"><table>
-<tr><th>OSI</th><th>TCP/IP</th></tr>
-<tr><td>7 परतें</td><td><b>4 परतें</b> (Application, Transport, Internet, Network Access)</td></tr>
-<tr><td>सैद्धांतिक model</td><td>असल में इंटरनेट यही चलाता है</td></tr>
+<tr><th>OSI (7 परतें, सैद्धांतिक)</th><th>TCP/IP (4 परतें, व्यावहारिक)</th></tr>
+<tr><td>Application + Presentation + Session</td><td><b>Application</b> (सब एक में — HTTP, FTP, SMTP)</td></tr>
+<tr><td>Transport</td><td><b>Transport</b> (TCP, UDP)</td></tr>
+<tr><td>Network</td><td><b>Internet</b> (IP)</td></tr>
+<tr><td>Data Link + Physical</td><td><b>Network Access</b> (Ethernet, WiFi)</td></tr>
 </table></div>
-<div class="tk">🧠 <b>TCP बनाम UDP (Transport परत):</b><br>
-<b>TCP</b> = भरोसेमंद, connection-oriented, order पक्का, acknowledgement — पर धीमा। (मिसाल: फ़ाइल, email, web)<br>
-<b>UDP</b> = तेज़, connectionless, कोई गारंटी नहीं। (मिसाल: video call, live streaming, DNS, gaming)<br>
-<i>"TCP = रजिस्टर्ड डाक (रसीद के साथ); UDP = पोस्टकार्ड (फेंक दो, पहुँचे तो पहुँचे)।"</i></div>
+<div class="tk">🧠 <b>याद रखने की तरकीब:</b> OSI की ऊपर की 3 परतें (App+Presentation+Session) TCP/IP में सिमट कर सिर्फ़ एक "Application" परत बन जाती हैं; नीचे की 2 (Data Link+Physical) सिमट कर "Network Access" बन जाती हैं। बीच की Transport और Network लगभग वैसी ही रहती हैं (नाम बदलकर Internet)।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> "TCP/IP में कितनी परतें?" का जवाब हमेशा <b>4</b> — OSI के 7 से भ्रमित मत होना।</div>
 </div>
 
-<div class="blk"><h3>📮 Protocols और Ports</h3>
-<div class="tk">🧠 <b>ईमेल के तीन protocol (पक्का ट्रैप):</b><br>
-<b>SMTP</b> (port 25) = mail <b>भेजना</b> (Push)<br>
-<b>POP3</b> (port 110) = mail <b>लाना</b>, फिर server से हटा देना<br>
-<b>IMAP</b> (port 143) = mail server पर <b>रखे-रखे</b> देखना (कई डिवाइस पर sync)</div>
+<div class="blk"><h3>🚚 Transport Layer — TCP बनाम UDP</h3>
+<p>Transport परत का काम है — data को <b>end-to-end</b> (एक असली एप्लिकेशन से दूसरे तक) सही-सलामत पहुँचाना। इसके लिए दो बिल्कुल अलग स्वभाव वाले प्रोटोकॉल हैं, और परीक्षा में इन्हें अक्सर आमने-सामने खड़ा किया जाता है।</p>
+<div style="overflow-x:auto"><table>
+<tr><th> </th><th>TCP</th><th>UDP</th></tr>
+<tr><td>Connection</td><td><b>Connection-oriented</b> (पहले हाथ मिलाना — 3-way handshake)</td><td>Connectionless (सीधे भेज दो)</td></tr>
+<tr><td>भरोसा</td><td>Reliable — acknowledgement, दोबारा भेजना</td><td>Unreliable — कोई गारंटी नहीं</td></tr>
+<tr><td>क्रम</td><td>पैकेट क्रम में पहुँचें (in-order)</td><td>क्रम की चिंता नहीं</td></tr>
+<tr><td>रफ़्तार</td><td>धीमा (सारी जाँच-पड़ताल की वजह से)</td><td>तेज़ (सीधा भेजना)</td></tr>
+<tr><td>उदाहरण</td><td>वेब (HTTP), ईमेल, फ़ाइल transfer</td><td>Video call, live streaming, DNS, online gaming</td></tr>
+</table></div>
+<div class="tk">🧠 <b>असली मिसाल:</b> <b>TCP = रजिस्टर्ड डाक</b> — रसीद मिलती है, पक्का पहुँचता है, पर समय लगता है। <b>UDP = पोस्टकार्ड</b> — फेंक दो, पहुँचे तो पहुँचे, तेज़ है और कोई रसीद नहीं माँगता।</div>
+<div class="tk">🧠 <b>UDP का इस्तेमाल क्यों?</b> Video call में अगर एक frame खो जाए तो उसे दोबारा माँगने से देर हो जाएगी (call ही अटक जाएगी) — इसलिए बेहतर है उसे छोड़कर आगे बढ़ना। यही वजह है कि हल्की सी रुकावट में भी video call चलती रहती है, पर फ़ाइल download रुक कर दोबारा कोशिश करता है।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> "UDP भरोसेमंद और connection-oriented है" — यह हमेशा ग़लत कथन होता है। दोनों गुण सिर्फ़ TCP के हैं।</div>
+</div>
+
+<div class="blk"><h3>📮 Application Layer Protocols और Ports</h3>
+<p>एक कंप्यूटर पर एक साथ कई एप्लिकेशन इंटरनेट इस्तेमाल कर रहे होते हैं — browser, mail app, game। सबका data एक ही IP address पर आता है, तो OS यह कैसे तय करे कि कौन-सा data किस एप्लिकेशन का है? इसका हल है — <b>Port Number</b> (0 से 65535 तक)। हर सेवा का एक तय "दरवाज़ा नंबर" होता है, जिसे <b>Well-Known Port</b> कहा जाता है (0-1023)।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>Protocol</th><th>Port</th><th>काम</th></tr>
+<tr><td><b>HTTP</b></td><td>80</td><td>सामान्य वेब पन्ने</td></tr>
+<tr><td><b>HTTPS</b></td><td>443</td><td>सुरक्षित (encrypted) वेब पन्ने</td></tr>
+<tr><td><b>FTP</b></td><td>21 (control), 20 (data)</td><td>फ़ाइल transfer</td></tr>
+<tr><td><b>Telnet</b></td><td>23</td><td>दूर के कंप्यूटर पर लॉगिन (असुरक्षित)</td></tr>
+<tr><td><b>DNS</b></td><td>53</td><td>नाम → IP address</td></tr>
+<tr><td><b>SMTP</b></td><td>25</td><td>mail <b>भेजना</b> (push)</td></tr>
+<tr><td><b>POP3</b></td><td>110</td><td>mail <b>लाना</b>, फिर server से हटाना</td></tr>
+<tr><td><b>IMAP</b></td><td>143</td><td>mail server पर <b>रखे-रखे</b> देखना (कई डिवाइस पर sync)</td></tr>
+</table></div>
+<div class="tk">🧠 <b>ईमेल के तीन प्रोटोकॉल — पक्का ट्रैप:</b> कल्पना कर एक डाकिया है (SMTP) जो सिर्फ़ चिट्ठी <b>भेजता</b> है, कभी लाता नहीं। घर पर चिट्ठियाँ या तो पूरी तरह उठा ली जाती हैं और डाकख़ाने से मिटा दी जाती हैं (POP3), या डाकख़ाने में ही रहती हैं और तू बस उन्हें देखने जाता है, कहीं से भी (IMAP)।</div>
 <div class="sqlLab">
   <div id="portAsk" class="ribAsk">🎯 "चैलेंज दे" दबा — port याद कर।</div>
   <div class="nsBar" style="margin-top:7px">
@@ -52,11 +82,40 @@ LESSON.p2net = `
   </div>
   <div id="portFb" class="ribFb"></div>
 </div>
-<div class="tr">⚠️ <b>PYQ (Q76):</b> "इंटरनेट पर mail को move करने वाला protocol?" → <b>SMTP</b> (भेजना)। POP3/IMAP सिर्फ़ लाने के लिए हैं।</div>
+<div class="tr">⚠️ <b>PYQ (Q76):</b> "इंटरनेट पर mail को move करने वाला protocol?" → <b>SMTP</b> (भेजना)। POP3/IMAP सिर्फ़ लाने के लिए हैं — यह घुमा-फिराकर बार-बार पूछा जाता है।</div>
 </div>
 
-<div class="blk"><h3>📦 IP Header Decoder</h3>
-<p style="font-size:.8rem;color:var(--dim)">packet का पहला byte डाल — version और header length खुद निकलेगी।</p>
+<div class="blk"><h3>🔢 IP Address — बनावट और Classes</h3>
+<p>हर डिवाइस को इंटरनेट पर एक अनोखा पता चाहिए — जैसे हर घर का एक पता होता है। <b>IPv4</b> यह पता <b>32 बिट</b> में देता है, जिसे इंसान के पढ़ने लायक बनाने के लिए 4 हिस्सों (<b>octet</b>, हर एक 0-255) में लिखा जाता है — जैसे 192.168.1.1। हर IP address के दो हिस्से होते हैं: <b>Network भाग</b> (किस नेटवर्क का सदस्य) और <b>Host भाग</b> (उस नेटवर्क में कौन-सा डिवाइस)।</p>
+<p><b>Classes क्यों बनीं?</b> शुरुआती इंटरनेट में तय करना था कि Network भाग कितना बड़ा और Host भाग कितना बड़ा हो — छोटे संगठन को कम host चाहिए, बड़े को ज़्यादा। इसलिए address को श्रेणियों में बाँटा गया, हर श्रेणी में network:host का बँटवारा अलग।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>Class</th><th>पहला Octet</th><th>उपयोग</th></tr>
+<tr><td><b>A</b></td><td>0 – 127</td><td>बहुत बड़े संगठन (कम network, बहुत सारे hosts)</td></tr>
+<tr><td><b>B</b></td><td>128 – 191</td><td>मध्यम आकार के संगठन</td></tr>
+<tr><td><b>C</b></td><td>192 – 223</td><td>छोटे नेटवर्क (सबसे सामान्य, घर/ऑफ़िस)</td></tr>
+<tr><td><b>D</b></td><td>224 – 239</td><td>Multicast (एक भेजे, कई सुनें)</td></tr>
+<tr><td><b>E</b></td><td>240 – 255</td><td>प्रायोगिक/अनुसंधान — सामान्य उपयोग में नहीं</td></tr>
+</table></div>
+<div class="tk">🧠 <b>ट्रिक:</b> पहला octet जितना छोटा, संगठन उतना बड़ा (Class A सबसे बड़े संगठनों के लिए, बहुत कम बचे हैं)। Class C सबसे सामान्य क्योंकि ज़्यादातर नेटवर्क छोटे होते हैं।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> पहला octet 192-223 दिखे तो सीधे <b>Class C</b> बोल — यही सबसे ज़्यादा पूछा जाता है।</div>
+</div>
+
+<div class="blk"><h3>🏠 विशेष Address, Subnetting, DHCP और NAT</h3>
+<p>Class-आधारित बँटवारे के अलावा कुछ address ऐसे हैं जो हर तकनीशियन को याद होने चाहिए, क्योंकि इनका एक ख़ास, तय काम है।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>Address / तकनीक</th><th>मतलब</th></tr>
+<tr><td><b>127.0.0.1</b></td><td><b>Loopback</b> — कंप्यूटर का ख़ुद का पता, "localhost" (नेटवर्क टेस्ट करने के लिए)</td></tr>
+<tr><td>Private ranges (10.x, 172.16-31.x, 192.168.x)</td><td>घर/ऑफ़िस के भीतर इस्तेमाल — इंटरनेट पर सीधे नहीं दिखते</td></tr>
+<tr><td><b>Subnet Mask</b> (जैसे 255.255.255.0)</td><td>बताता है कि address में कितना हिस्सा Network है, कितना Host</td></tr>
+<tr><td><b>DHCP</b></td><td>Dynamic Host Configuration Protocol — डिवाइस को अपने आप IP दे देता है</td></tr>
+<tr><td><b>NAT</b></td><td>Network Address Translation — घर के private IP को इंटरनेट के एक public IP में बदलता है</td></tr>
+</table></div>
+<div class="tk">🧠 <b>NAT क्यों ज़रूरी है?</b> IPv4 के कुल पते सीमित हैं (लगभग 4 अरब), पर दुनिया में उससे कहीं ज़्यादा डिवाइस हैं। NAT की वजह से एक घर के 10 डिवाइस, एक ही public IP शेयर कर सकते हैं — राऊटर अंदर-बाहर के पते ख़ुद बदलता रहता है।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> 127.0.0.1 को कभी "किसी और सर्वर का पता" मत समझना — यह हमेशा <b>अपना ही</b> डिवाइस होता है (self-test/loopback)।</div>
+</div>
+
+<div class="blk"><h3>📦 IP Header Decoder — पहला byte ख़ुद पढ़</h3>
+<p>हर IPv4 packet के आगे एक छोटा "header" जुड़ा होता है — जैसे चिट्ठी के ऊपर पता लिखा होता है। इस header का सबसे पहला byte दो हिस्सों में बँटा है: पहले 4 बिट <b>Version</b> (4=IPv4, 6=IPv6), अगले 4 बिट <b>IHL</b> (Header Length — header कितने 4-byte शब्दों का है)।</p>
 <div class="sqlLab">
   <div class="nsBar">
     <input id="ipIn" class="nsIn" value="01000010" spellcheck="false" maxlength="8">
@@ -69,63 +128,127 @@ LESSON.p2net = `
   </div>
   <div id="ipOut" class="sqlOut"></div>
 </div>
-<div class="tr">⚠️ <b>PYQ (Q90):</b> पहले 8 बिट 01000010 → Version = 0100 = <b>4 (IPv4)</b>, IHL = 0010 = 2 (बहुत छोटा, असल में invalid)। असल पकड़ यही है कि पहले 4 बिट <b>version</b> बताते हैं।</div>
+<div class="tr">⚠️ <b>PYQ (Q90):</b> पहले 8 बिट 01000010 → Version = 0100 = <b>4 (IPv4)</b>, IHL = 0010 = 2 (असल में बहुत छोटा, invalid — पर सवाल का मक़सद सिर्फ़ यह जाँचना है कि तुझे पता है पहले 4 बिट version बताते हैं)।</div>
 </div>
 
-<div class="blk"><h3>📡 Transmission Media + Switching + Multiplexing</h3>
+<div class="blk"><h3>🧵 Transmission Media — डेटा किस रास्ते बहता है</h3>
+<p>Physical परत पर असली सवाल है — signal किस माध्यम से यात्रा करे? इसके दो बड़े परिवार हैं।</p>
 <div style="overflow-x:auto"><table>
-<tr><th>Guided (तार वाला)</th><th>Unguided (बेतार)</th></tr>
-<tr><td>Twisted Pair (सस्ता, LAN), Coaxial (TV), <b>Optical Fibre</b> (सबसे तेज़, प्रकाश से, कोई EMI नहीं)</td><td>Radio wave, Microwave, Infrared (TV remote), Satellite</td></tr>
+<tr><th>Guided (तार वाला माध्यम)</th><th>Unguided (बेतार माध्यम)</th></tr>
+<tr><td><b>Twisted Pair</b> — सस्ता, LAN में सबसे आम</td><td><b>Radio Wave</b> — WiFi, mobile</td></tr>
+<tr><td><b>Coaxial Cable</b> — पुराना, TV cable</td><td><b>Microwave</b> — टावर-से-टावर, लाइन-ऑफ़-साइट चाहिए</td></tr>
+<tr><td><b>Optical Fibre</b> — प्रकाश से, सबसे तेज़, EMI-मुक्त</td><td><b>Infrared</b> — TV remote, बहुत कम दूरी</td></tr>
+<tr><td> </td><td><b>Satellite</b> — बहुत बड़ी दूरी, दूर-दराज़ इलाक़े</td></tr>
 </table></div>
-<div class="tk">🧠 <b>Optical fibre</b> = सबसे ज़्यादा bandwidth, सबसे कम loss, प्रकाश (total internal reflection) से — इसीलिए backbone में। Twisted pair सबसे सस्ता व आम।<br>
-🧠 <b>Switching:</b> <b>Circuit switching</b> (पूरा रास्ता पहले तय — फ़ोन), <b>Packet switching</b> (data छोटे packets में, अलग-अलग रास्ते — इंटरनेट), Message switching।<br>
-🧠 <b>Multiplexing</b> (एक ही लाइन पर कई संकेत): <b>FDM</b> (frequency बाँटो — रेडियो), <b>TDM</b> (समय बाँटो), WDM (प्रकाश की तरंगदैर्घ्य — fibre)।</div>
-<div class="tr">⚠️ <b>ट्रैप:</b> इंटरनेट <b>packet switching</b> इस्तेमाल करता है (circuit नहीं)। Bandwidth = एक सेकंड में कितना data (bps)।</div>
+<div class="tk">🧠 <b>Optical Fibre सबसे बेहतर क्यों?</b> इसमें डेटा प्रकाश की किरण के रूप में यात्रा करता है (सिद्धांत: total internal reflection) — इसलिए इसमें <b>Electromagnetic Interference (EMI) का कोई असर नहीं</b> होता, नुक़सान (attenuation) सबसे कम है, और bandwidth सबसे ज़्यादा। यही वजह है कि देशों के बीच समुंदर के अंदर बिछी केबल भी fibre ही होती है।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> Twisted pair "सस्ता और आम" है, पर "सबसे तेज़/best" नहीं — वह ख़िताब Optical Fibre का है। दोनों को मत उलझा।</div>
 </div>
 
-<div class="blk"><h3>🔢 IP Addressing + Classes</h3>
-<div class="tk">🧠 <b>IPv4</b> = 32 bit (चार 8-बिट octets, 0-255), जैसे 192.168.1.1। <b>IPv6</b> = 128 bit (hex, अनगिनत पते)।<br>
-🧠 हर IP के दो हिस्से: <b>Network</b> भाग + <b>Host</b> भाग।</div>
+<div class="blk"><h3>🔀 Switching Techniques — रास्ता कैसे तय होता है</h3>
+<p>जब कई डिवाइस एक ही नेटवर्क शेयर करते हैं, तो data को एक स्रोत से मंज़िल तक भेजने का तरीक़ा चुनना पड़ता है — इसे Switching कहते हैं।</p>
 <div style="overflow-x:auto"><table>
-<tr><th>Class</th><th>पहला octet</th><th>उपयोग</th></tr>
-<tr><td><b>A</b></td><td>0-127</td><td>बहुत बड़े नेटवर्क</td></tr>
-<tr><td><b>B</b></td><td>128-191</td><td>मध्यम</td></tr>
-<tr><td><b>C</b></td><td>192-223</td><td>छोटे (आम)</td></tr>
-<tr><td><b>D</b></td><td>224-239</td><td>Multicast</td></tr>
-<tr><td><b>E</b></td><td>240-255</td><td>प्रयोग/अनुसंधान</td></tr>
+<tr><th>तरीक़ा</th><th>कैसे काम करता है</th><th>मिसाल</th></tr>
+<tr><td><b>Circuit Switching</b></td><td>बात शुरू होने से पहले पूरा रास्ता आरक्षित (dedicated) कर लिया जाता है</td><td>पुराना टेलीफ़ोन नेटवर्क</td></tr>
+<tr><td><b>Packet Switching</b></td><td>Data छोटे-छोटे packets में टूटता है, हर packet अपना अलग रास्ता ले सकता है, मंज़िल पर फिर जुड़ता है</td><td>इंटरनेट</td></tr>
+<tr><td>Message Switching</td><td>पूरा संदेश एक जगह रुकता है, फिर आगे भेजा जाता है (store-and-forward)</td><td>पुराना टेलीग्राफ़</td></tr>
 </table></div>
-<div class="tk">🧠 <b>ख़ास पते:</b> 127.0.0.1 = <b>loopback</b> (ख़ुद का पता)। Private ranges (10.x, 172.16-31.x, 192.168.x)। <b>Subnet mask</b> (जैसे 255.255.255.0) network व host भाग अलग करता है। <b>DHCP</b> अपने आप IP देता है; <b>NAT</b> private↔public बदलता है।</div>
-<div class="tr">⚠️ <b>ट्रैप:</b> पहला octet 192-223 = <b>Class C</b>। 127.0.0.1 हमेशा loopback (localhost)।</div>
+<div class="tk">🧠 <b>Circuit switching की बर्बादी:</b> पूरी बातचीत के दौरान रास्ता आरक्षित रहता है, चाहे उस पल कोई बोल न रहा हो — यानी बैंडविड्थ बर्बाद होती है। <b>Packet switching इसी समस्या को हल करती है</b> — रास्ता तभी इस्तेमाल होता है जब सच में data भेजना हो, इसलिए एक ही लाइन पर कई लोगों का data एक साथ बँट सकता है। यही वजह है कि इंटरनेट सिर्फ़ packet switching पर बना है।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> "इंटरनेट किस switching पर चलता है?" — हमेशा <b>Packet switching</b>, Circuit switching नहीं।</div>
 </div>
 
-<div class="blk"><h3>🕸️ Topology और Transmission</h3>
+<div class="blk"><h3>🎛️ Multiplexing — एक लाइन पर कई आवाज़ें</h3>
+<p>महँगी केबल/तार बार-बार बिछाना मुश्किल है। इसलिए एक ही भौतिक माध्यम पर <b>कई संकेतों को एक साथ भेजने</b> की तकनीक विकसित हुई — इसे Multiplexing कहते हैं। भेजने वाले सिरे पर Multiplexer (MUX) संकेत जोड़ता है, प्राप्त करने वाले सिरे पर Demultiplexer (DEMUX) उन्हें फिर अलग करता है।</p>
 <div style="overflow-x:auto"><table>
-<tr><th>Topology</th><th>ढाँचा</th><th>ख़ास बात</th></tr>
-<tr><td><b>Star</b></td><td>सब केंद्रीय hub/switch से</td><td>सबसे प्रचलित; hub फेल तो सब ठप</td></tr>
-<tr><td><b>Bus</b></td><td>एक ही मुख्य केबल</td><td>सस्ता; केबल टूटी तो सब ठप</td></tr>
-<tr><td><b>Ring</b></td><td>गोल घेरे में</td><td>token से बारी</td></tr>
-<tr><td><b>Mesh</b></td><td>हर नोड हर नोड से</td><td>सबसे भरोसेमंद, सबसे महँगा</td></tr>
+<tr><th>तरीक़ा</th><th>कैसे बाँटता है</th><th>मिसाल</th></tr>
+<tr><td><b>FDM</b> (Frequency Division)</td><td>हर संकेत को अलग frequency-band दो</td><td>रेडियो/TV चैनल</td></tr>
+<tr><td><b>TDM</b> (Time Division)</td><td>हर संकेत को बारी-बारी थोड़ा-थोड़ा समय दो</td><td>डिजिटल टेलीफ़ोन लाइनें</td></tr>
+<tr><td><b>WDM</b> (Wavelength Division)</td><td>प्रकाश की अलग-अलग तरंगदैर्घ्य (रंग) एक साथ भेजो</td><td>Optical Fibre backbone</td></tr>
 </table></div>
-<div class="tk">🧠 <b>Transmission mode:</b> <b>Simplex</b> (एकतरफ़ा — TV, keyboard), <b>Half-duplex</b> (बारी-बारी — walkie-talkie), <b>Full-duplex</b> (एक साथ दोनों — फ़ोन)।</div>
-<div class="tk">🧠 <b>Network आकार:</b> <b>PAN</b> (व्यक्तिगत) &lt; <b>LAN</b> (एक इमारत) &lt; <b>MAN</b> (शहर) &lt; <b>WAN</b> (देश/दुनिया — इंटरनेट सबसे बड़ा WAN)।</div>
-<div class="tr">⚠️ <b>PYQ (Q94):</b> WiFi बनाम WiMax — WiFi छोटे इलाक़े (LAN, ~100m), WiMax बड़े इलाक़े (MAN, कई किमी)। <b>PYQ (Q96):</b> FTP के तीन transmission mode — <b>stream, block, compressed</b>। <b>PYQ (Q97):</b> Checksum = <b>error detection</b> के लिए।</div>
+<div class="tk">🧠 याद रखने की तरकीब: <b>FDM = जगह बाँटो (frequency), TDM = समय बाँटो, WDM = रंग बाँटो</b>।</div>
+</div>
+
+<div class="blk"><h3>📻 Modem — डिजिटल और एनालॉग के बीच अनुवादक</h3>
+<p><b>समस्या (Why):</b> तेरा कंप्यूटर <b>digital</b> भाषा बोलता है (सिर्फ़ 0 और 1 — चौकोर दालें)। पर पुरानी टेलीफ़ोन लाइन/केबल पर सिर्फ़ <b>analog</b> संकेत (लहरें) चल सकते हैं। दोनों की भाषा अलग — तो कंप्यूटर का data उस लाइन पर जाए कैसे?</p>
+<p><b>हल — Modem।</b> नाम ही उसका काम है: <b>MO</b>dulator + <b>DEM</b>odulator।</p>
+<div class="tk">🧠 <b>दोनों काम (यही परिभाषा है):</b><br>
+<b>Modulation</b> (भेजते समय) = कंप्यूटर का <b>digital → analog</b> में बदलना, ताकि लाइन पर चल सके।<br>
+<b>Demodulation</b> (पाते समय) = आई हुई <b>analog → digital</b> में वापस बदलना, ताकि कंप्यूटर समझ सके।<br>
+यानी modem दोनों सिरों पर चाहिए — एक भेजने वाले के पास, एक पाने वाले के पास।</div>
+<div class="tk">🧠 <b>असली मिसाल:</b> दो लोग हिन्दी जानते हैं, पर बीच का तार सिर्फ़ अंग्रेज़ी ले जा सकता है। तो एक <b>दुभाषिया</b> इस सिरे पर हिन्दी→अंग्रेज़ी करे, दूसरा उस सिरे पर अंग्रेज़ी→हिन्दी। Modem वही दुभाषिया है।<br>
+🧠 <b>रफ़्तार</b> <b>bps</b> (bits per second) में नापी जाती है। प्रकार: Internal/External, Dial-up (धीमा), DSL/Cable (तेज़)।</div>
+<div class="tr">⚠️ <b>RSSB Trap:</b> Modem का पूरा नाम <b>Modulator-Demodulator</b> — और यह <b>digital↔analog दोनों दिशा</b> में बदलता है (सिर्फ़ एक दिशा नहीं)। इसे Router से मत उलझा: <b>Modem</b> = भाषा बदले (ISP से जोड़े); <b>Router</b> = रास्ता चुने व कई डिवाइस में बाँटे।</div>
+</div>
+
+<div class="blk"><h3>🛡️ Error Detection — रास्ते में बिगड़े data को पकड़ना</h3>
+<p><b>समस्या (Why):</b> तार में बिजली का शोर (noise) किसी bit को 0 से 1 कर सकता है। पाने वाले को कैसे पता चले कि जो मिला वही भेजा गया था? इसके लिए भेजने वाला कुछ <b>अतिरिक्त जाँच-बिट</b> साथ भेजता है।</p>
+<div class="tk">🧠 <b>1) Parity Bit — सबसे सरल तरीक़ा:</b> data के साथ <b>एक अतिरिक्त bit</b> जोड़ो ताकि 1 की कुल गिनती एक तय नियम पर आ जाए।<br>
+<b>Even parity</b> = 1 की गिनती <b>सम</b> रखो। <b>Odd parity</b> = <b>विषम</b> रखो।<br>
+<b>मिसाल (even parity):</b> data 1011001 में चार 1 हैं (पहले से सम) → parity bit = <b>0</b> → भेजा 10110010।<br>
+अगर data 1010001 होता (तीन 1, विषम) → parity bit = <b>1</b> लगाकर सम बनाते।<br>
+पाने वाला 1 गिनता है — गिनती नियम तोड़े तो समझ जाता है कि data बिगड़ा।<br>
+<b>सीमा:</b> यह सिर्फ़ <b>विषम संख्या</b> में बिगड़ी bits पकड़ता है — अगर <b>दो</b> bits एक साथ बदल जाएँ तो गिनती फिर सम हो जाएगी और ग़लती <b>छूट जाएगी</b>। और यह ग़लती <b>पकड़ता</b> है, <b>सुधारता नहीं</b>।</div>
+<div class="tk">🧠 <b>2) Checksum:</b> सारे data-खंडों को जोड़कर एक जाँच-संख्या भेजो; पाने वाला ख़ुद जोड़कर मिलाए — मेल न खाए तो data बिगड़ा। (यह भी सिर्फ़ पकड़ता है।)<br>
+🧠 <b>3) CRC</b> (Cyclic Redundancy Check) = भाग (division) पर आधारित, parity से कहीं ज़्यादा ताक़तवर — Ethernet इसी का उपयोग करता है।<br>
+🧠 <b>4) Hamming Code</b> — यह अकेला ऐसा है जो ग़लती <b>पकड़ता भी है और सुधारता भी</b> (error <u>correction</u>): कई parity bits अलग-अलग जगह रखकर यह बता देता है कि <b>कौन-सी bit</b> बिगड़ी, फिर उसे उलट दो।</div>
+<div style="overflow-x:auto"><table>
+<tr><th>तरीक़ा</th><th>क्या करता है</th><th>ताक़त</th></tr>
+<tr><td><b>Parity</b></td><td>सिर्फ़ पकड़े (detect)</td><td>सबसे कमज़ोर — 2 bit बिगड़ें तो चूक जाए</td></tr>
+<tr><td><b>Checksum</b></td><td>सिर्फ़ पकड़े</td><td>मध्यम</td></tr>
+<tr><td><b>CRC</b></td><td>सिर्फ़ पकड़े</td><td>मज़बूत (Ethernet)</td></tr>
+<tr><td><b>Hamming</b></td><td>पकड़े <b>+ सुधारे</b></td><td>⭐ correction भी</td></tr>
+</table></div>
+<div class="tr">⚠️ <b>RSSB Trap:</b> "error <b>detection</b>" पूछें → Parity/Checksum/CRC। "error <b>correction</b>" पूछें → <b>Hamming code</b>। सबसे आम ग़लती: parity को "ग़लती सुधारने वाला" मान लेना — वह सिर्फ़ <b>बताता</b> है कि ग़लती हुई, ठीक नहीं करता।</div>
+</div>
+
+<div class="blk"><h3>🕸️ Network Topology — डिवाइस कैसे जुड़े हैं</h3>
+<p>Topology का मतलब है — नेटवर्क के डिवाइस भौतिक/तार्किक रूप से किस <b>आकार</b> में जुड़े हैं। यह चुनाव सीधे तौर पर तय करता है कि नेटवर्क कितना भरोसेमंद है और कितना ख़र्च होगा।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>Topology</th><th>ढाँचा</th><th>फ़ायदा</th><th>नुक़सान</th></tr>
+<tr><td><b>Star</b></td><td>सब डिवाइस केंद्रीय hub/switch से जुड़े</td><td>एक तार टूटे तो बाक़ी अप्रभावित; ढूँढना आसान</td><td>hub/switch फेल तो <b>सब कुछ ठप</b></td></tr>
+<tr><td><b>Bus</b></td><td>सब डिवाइस एक ही मुख्य केबल से जुड़े</td><td>सस्ता, बिछाना आसान</td><td>मुख्य केबल टूटी तो <b>पूरा नेटवर्क ठप</b></td></tr>
+<tr><td><b>Ring</b></td><td>डिवाइस गोल घेरे में जुड़े, data token से घूमे</td><td>बराबर मौक़ा सबको</td><td>एक कड़ी टूटी तो घेरा टूटे (सिवाय dual-ring के)</td></tr>
+<tr><td><b>Mesh</b></td><td>हर डिवाइस हर दूसरे डिवाइस से सीधा जुड़ा</td><td>सबसे भरोसेमंद — एक रास्ता टूटे तो दूसरा मिलेगा</td><td>सबसे महँगा (बहुत सारी केबल)</td></tr>
+</table></div>
+<div class="tk">🧠 <b>असली मिसाल:</b> Star = कंपनी में हर कर्मचारी का सीधा फ़ोन manager के पास (manager गया तो communication ठप)। Mesh = हर कर्मचारी का हर दूसरे कर्मचारी को सीधा नंबर (किसी का फ़ोन ख़राब भी हो तो बाक़ी रास्ते खुले)।</div>
+<div class="tr">⚠️ <b>ट्रैप:</b> "सबसे भरोसेमंद पर सबसे महँगी" पूछते ही सीधा <b>Mesh</b> बोल। "सबसे सस्ती पर एक तार टूटने पर पूरा नेटवर्क ठप" पूछते ही <b>Bus</b> बोल।</div>
+</div>
+
+<div class="blk"><h3>📡 Transmission Mode — बात किस दिशा में हो सकती है</h3>
+<p>दो डिवाइस के बीच data किस दिशा में बह सकता है, इसके तीन तरीक़े हैं — और तीनों की असली दुनिया की मिसालें एक बार समझ लेने पर कभी नहीं भूलती।</p>
+<div style="overflow-x:auto"><table>
+<tr><th>मोड</th><th>दिशा</th><th>मिसाल</th></tr>
+<tr><td><b>Simplex</b></td><td>सिर्फ़ एक दिशा, हमेशा</td><td>TV प्रसारण, keyboard→computer</td></tr>
+<tr><td><b>Half-Duplex</b></td><td>दोनों दिशा, पर <b>एक बार में एक ही</b></td><td>Walkie-talkie</td></tr>
+<tr><td><b>Full-Duplex</b></td><td>दोनों दिशा, <b>एक साथ</b></td><td>टेलीफ़ोन बातचीत</td></tr>
+</table></div>
+<div class="tk">🧠 Walkie-talkie में जब तक तू "over" न कहे, दूसरा बोल नहीं सकता — यही Half-duplex है। फ़ोन पर दोनों एक साथ बोल और सुन सकते हैं — यही Full-duplex है।</div>
+</div>
+
+<div class="blk"><h3>📏 Network के प्रकार — आकार के अनुसार</h3>
+<p>नेटवर्क कितनी भौगोलिक दूरी तक फैला है, इसके आधार पर उसे नाम दिया जाता है — छोटे कमरे से लेकर पूरी दुनिया तक।</p>
+<div class="tk">🧠 <b>PAN</b> (Personal — एक व्यक्ति, जैसे Bluetooth headset) &lt; <b>LAN</b> (Local — एक इमारत/ऑफ़िस) &lt; <b>MAN</b> (Metropolitan — एक शहर) &lt; <b>WAN</b> (Wide — देश/दुनिया — <b>इंटरनेट सबसे बड़ा WAN है</b>)।</div>
+<div class="tr">⚠️ <b>PYQ (Q94):</b> WiFi बनाम WiMax — <b>WiFi = LAN स्तर</b> (लगभग 100 मीटर, एक इमारत), <b>WiMax = MAN स्तर</b> (कई किलोमीटर, पूरा शहर)। इन्हें आकार के हिसाब से ही याद रख।</div>
 </div>
 
 <div class="blk"><h3>⚡ 30-सेकंड रिवीज़न</h3>
 <div class="tk" style="line-height:2">
-🏗️ OSI 7 परतें: <b>All People Seem To Need Data Processing</b><br>
+🏗️ OSI 7 परतें: <b>All People Seem To Need Data Processing</b> | TCP/IP सिर्फ़ 4 परतें<br>
 🔌 Hub/Repeater=Physical(1) | Switch/Bridge=DataLink(2) | Router=Network(3)<br>
 📦 PDU: Transport=Segment, Network=<b>Packet</b>, DataLink=Frame, Physical=Bits<br>
 🚚 <b>TCP</b> = भरोसेमंद/धीमा (रजिस्टर्ड डाक) | <b>UDP</b> = तेज़/बेभरोसा (पोस्टकार्ड)<br>
 📮 <b>SMTP(25)</b> भेजे | POP3(110) लाए+हटाए | IMAP(143) रखे-रखे देखे<br>
 🔢 HTTP=80, HTTPS=443, FTP=21, DNS=53, Telnet=23<br>
-📦 IPv4 पहला byte = 4bit Version + 4bit IHL<br>
-🕸️ Star (hub) | Bus (एक केबल) | Ring (token) | Mesh (सबसे भरोसेमंद)<br>
+📦 IPv4 पहला byte = 4bit Version + 4bit IHL | 192-223 = Class C | 127.0.0.1 = loopback<br>
+🌉 NAT = private↔public IP बदले | DHCP = अपने आप IP दे<br>
+🧵 Optical Fibre सबसे तेज़ (EMI-मुक्त) | इंटरनेट = <b>Packet switching</b><br>
+🎛️ FDM=जगह बाँटो, TDM=समय बाँटो, WDM=रंग बाँटो<br>
+🕸️ Star (hub, केंद्रीय फेल=सब ठप) | Bus (एक केबल) | Ring (token) | Mesh (सबसे भरोसेमंद)<br>
 📡 Simplex(एकतरफ़ा) | Half-duplex(बारी) | Full-duplex(साथ-साथ)<br>
-📏 PAN &lt; LAN &lt; MAN &lt; WAN | Checksum = error detection
+📏 PAN &lt; LAN(WiFi) &lt; MAN(WiMax) &lt; WAN | Checksum = error detection
 </div>
 </div>
 `;
+
 
 CARDS.p2net = [
   ['[रिकॉल] OSI model में कितनी परतें होती हैं और उन्हें याद रखने का मंत्र?', '7 परतें — "All People Seem To Need Data Processing" (Application से Physical तक)।', 'APSTNDP'],
